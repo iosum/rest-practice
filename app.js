@@ -1,5 +1,18 @@
 const express = require('express');
 const logger = require('morgan');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+
+mongoose.connect('mongodb+srv://comp2106:castle0118joyce@cluster-4ot4y.mongodb.net/postsdb?retryWrites=true&w=majority', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(
+    (res) => {
+        console.log('connect to db');
+    }
+).catch(() => {
+    console.log('404');
+});
 
 // import routes
 const usersRoute = require('./routes/users');
@@ -9,6 +22,8 @@ const app = express();
 
 // Middleware
 app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // use the certain route
 app.use('/users', usersRoute)
