@@ -1,10 +1,17 @@
 const express = require('express');
 const logger = require('morgan');
 
+// import routes
+const usersRoute = require('./routes/users');
+
+
 const app = express();
 
 // Middleware
 app.use(logger('dev'));
+
+// use the certain route
+app.use('/users', usersRoute)
 
 // Controllers
 app.get('/', (req, res, next) => {
