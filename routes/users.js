@@ -4,7 +4,9 @@ const express = require('express');
 // if there is an error, it will automatically throw the error
 const router = require('express-promise-router')();
 
-const UsersControllers = require('../controllers/users'); 
+const UsersControllers = require('../controllers/users');
+
+const { validateParam, schemas } = require('../helpers/routeHelpers');
 
 router.route('/')
     .get(UsersControllers.index)
@@ -13,12 +15,14 @@ router.route('/')
 // /users/:id
 router.route('/:id')
     // get a particular user
-    .get(UsersControllers.getUser)
+    // whenever the get request is sent, first it will execute the validateParam() and if everything is fine
+    // we go to the UsersControllers.getUser
+    .get(validateParam(schemas.idSchema, 'id'), UsersControllers.getUser)
     // modify a singular resource which is already a part of resources collection. 
     // PUT replaces the resource in its entirety. 
     .put(UsersControllers.replaceUser)
     .patch(UsersControllers.updateUser)
-    // .delete()
+// .delete()
 
 
 router.route('/:id/posts')

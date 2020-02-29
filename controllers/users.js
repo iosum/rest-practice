@@ -1,6 +1,9 @@
 const User = require('../models/user');
 const Post = require('../models/post');
 
+
+
+
 module.exports = {
 
     /**
@@ -105,14 +108,19 @@ module.exports = {
      */
 
     getUser: async (req, res, next) => {
+        // validate the userid
+       // const result = idSchema.validate(req.params);
+        //console.log(result);
+
         // get the id from the route
 
         // before es6
         //const id = req.params.id;
         // es6 version, but both perform the same task 
-        const { id } = req.params;
+        // old way (w/o validation)
+        //const { id } = req.params;
         // console.log(req.params.id);
-
+        const { id } = req.value.params;
         const user = await User.findById(id);
         res.status(200).json(user);
 
