@@ -1,7 +1,7 @@
 const User = require('../models/user');
 
 module.exports = {
-    
+
     /**
      * callback
      */
@@ -45,31 +45,27 @@ module.exports = {
      * callback for saving new users
      */
 
-     /*
-    newUser: (req, res, next) => {
-        //console.log(req.body);
-        const newUser = new User(req.body);
-        //console.log(newUser);
-        newUser.save((err, user) => {
-            res.status(201).json(user);
-        });
-    },
-    */
+    /*
+   newUser: (req, res, next) => {
+       //console.log(req.body);
+       const newUser = new User(req.body);
+       //console.log(newUser);
+       newUser.save((err, user) => {
+           res.status(201).json(user);
+       });
+   },
+   */
 
     /**
      *  using async / await
+     * 
      */
     index: async (req, res, next) => {
-        try {
-            // call the method to find the users in the user model but we will wait until we find all users 
-            // and store it in the users variable (indacte we get all the users from the db) 
-            // instead of executing the next line then coming back to the find function
-            const users = await User.find({});
-            res.status(200).json(users);
-        }
-        catch(err) {
-            next(err);
-        }
+        // call the method to find the users in the user model but we will wait until we find all users 
+        // and store it in the users variable (indacte we get all the users from the db) 
+        // instead of executing the next line then coming back to the find function
+        const users = await User.find({});
+        res.status(200).json(users);
     },
 
     /**
@@ -93,16 +89,14 @@ module.exports = {
      * async / await
      */
     newUser: async (req, res, next) => {
-        try {
-            // get the new user
-            const newUser = new User(req.body);
-            // save the new user to the db
-            const user = await newUser.save({});
-            res.status(201).json(user);
-        }
-        catch(err) {
-            next(err);
-        }
+
+        // get the new user
+        const newUser = new User(req.body);
+        // save the new user to the db
+        const user = await newUser.save({});
+        res.status(201).json(user);
+
+
     }
 };
 
