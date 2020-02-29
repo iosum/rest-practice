@@ -95,7 +95,7 @@ module.exports = {
     newUser: async (req, res, next) => {
 
         // get the new user
-        const newUser = new User(req.body);
+        const newUser = new User(req.value.body);
         // save the new user to the db
         const user = await newUser.save({});
         res.status(201).json(user);
@@ -131,9 +131,9 @@ module.exports = {
      */
     replaceUser: async (req, res, next) => {
         // 1. get the id 
-        const { id } = req.params;
+        const { id } = req.value.params;
         // 2. fetch the body
-        const newUser = req.body;
+        const newUser = req.value.body;
         //console.log("id\n" + id +"user\n" + newUser);
 
         const result = await User.findByIdAndUpdate(id, newUser)
@@ -148,9 +148,9 @@ module.exports = {
 
     updateUser: async (req, res, next) => {
         // 1. get the id 
-        const { id } = req.params;
+        const { id } = req.value.params;
         // 2. fetch the body
-        const newUser = req.body;
+        const newUser = req.value.body;
         //console.log("id\n" + id +"user\n" + newUser);
 
         const result = await User.findByIdAndUpdate(id, newUser)
@@ -160,19 +160,19 @@ module.exports = {
     },
 
     getUserPosts: async(req, res, next) => {
-        const {id} = req.params;
+        const {id} = req.value.params;
         const user = await User.findById(id).populate({
             path: 'posts',
             model: Post
         });
         console.log(user.posts);
-        
+        res.status(200).json(user);
     },
 
     newUserPost: async(req, res, next) => {
-        const {id} = req.params;
+        const {id} = req.value.params;
         // create a new post
-        const newPost = new Post(req.body);
+        const newPost = new Post(req.value.body);
         //console.log(newPost);
         // define the relationship between new post and the user
         const user = await User.findById(id);

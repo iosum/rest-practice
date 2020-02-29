@@ -29,7 +29,46 @@ module.exports = {
         }
     },
 
+    validateBody: (schema) => {
+        return (req, res, next) => {
+            const result = schema.validate(req.body);
+
+            if(result.error) {
+                return res.status(400).json(result.error);
+            }
+            else {
+                // there is an body
+                if(!req.value) {
+                    req.value = {};
+                }
+                // if the req.value has a body object
+                if(!req.value['body']) {
+                    req.value['body'] = {};
+                }
+                req.value['body'] = result.value;
+                // escape the validate function
+                next();
+            }
+        }
+    },
+
     schemas: {
+        
+        userSchema: Joi.object().keys({
+            firstName: Joi.string().required(),
+            lastName: Joi.string().required()
+        }),
+
+        userOptionalSchema: Joi.object().keys({
+            firstName: Joi.string(),
+            lastName: Joi.string()
+        }),
+
+        postSchema: Joi.object().keys({
+            content: Joi.string().required(),
+            createdAt: Joi.date().required()
+        }),
+
         idSchema: Joi.object().keys({
             param: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required()
         })
