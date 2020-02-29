@@ -27,6 +27,8 @@ module.exports = {
     /**
      * using promisis 
      */
+
+    /*
     index: (req, res, next) => {
         User.find({})
             .then((users) => {
@@ -36,6 +38,7 @@ module.exports = {
                 next(err);
             })
     },
+    */
 
 
     /**
@@ -53,6 +56,26 @@ module.exports = {
     },
     */
 
+    /**
+     *  using async / await
+     */
+    index: async (req, res, next) => {
+        try {
+            // call the method to find the users in the user model but we will wait until we find all users 
+            // and store it in the users variable (indacte we get all the users from the db) 
+            // instead of executing the next line then coming back to the find function
+            const users = await User.find({});
+            res.status(200).json(users);
+        }
+        catch(err) {
+            next(err);
+        }
+    },
+
+    /**
+     * promisis
+     */
+    /*
     newUser: (req, res, next) => {
         const newUser = new User(req.body);
         // save the user using newUser which is sent by the client
@@ -63,6 +86,23 @@ module.exports = {
             .catch((err) => {
                 next(err);
             })
+    }
+    */
+
+    /**
+     * async / await
+     */
+    newUser: async (req, res, next) => {
+        try {
+            // get the new user
+            const newUser = new User(req.body);
+            // save the new user to the db
+            const user = await newUser.save({});
+            res.status(201).json(user);
+        }
+        catch(err) {
+            next(err);
+        }
     }
 };
 
