@@ -96,8 +96,65 @@ module.exports = {
         const user = await newUser.save({});
         res.status(201).json(user);
 
+    },
+
+    /**
+     *  GET : /users/id
+     *  get a particular user via id
+     */
+
+    getUser: async (req, res, next) => {
+        // get the id from the route
+
+        // before es6
+        //const id = req.params.id;
+        // es6 version, but both perform the same task 
+        const { id } = req.params;
+        // console.log(req.params.id);
+
+        const user = await User.findById(id);
+        res.status(200).json(user);
+
+    },
+
+    /**
+     * enforce every value needed to provided to work
+     */
+    replaceUser: async (req, res, next) => {
+        // 1. get the id 
+        const { id } = req.params;
+        // 2. fetch the body
+        const newUser = req.body;
+        //console.log("id\n" + id +"user\n" + newUser);
+
+        const result = await User.findByIdAndUpdate(id, newUser)
+        //console.log(result);
+        res.status(200).json({ success: true });
+
+    },
+
+    /**
+     * only needs to provide one field to work 
+     */
+
+    updateUser: async (req, res, next) => {
+        // 1. get the id 
+        const { id } = req.params;
+        // 2. fetch the body
+        const newUser = req.body;
+        //console.log("id\n" + id +"user\n" + newUser);
+
+        const result = await User.findByIdAndUpdate(id, newUser)
+        //console.log(result);
+        res.status(200).json({ success: true });
 
     }
+
+
+
+
+
+
 };
 
 

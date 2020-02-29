@@ -10,4 +10,24 @@ router.route('/')
     .get(UsersControllers.index)
     .post(UsersControllers.newUser);
 
+// /users/:id
+router.route('/:id')
+    
+    // get a particular user
+    .get(UsersControllers.getUser)
+    // modify a singular resource which is already a part of resources collection. 
+    // PUT replaces the resource in its entirety. 
+    .put(UsersControllers.replaceUser)
+    .patch(UsersControllers.updateUser)
+    // .delete()
+
 module.exports = router;
+
+/*
+http method to use for CRUD (Create, Read/Retrieve, Update, Delete) operations.
+Create — POST
+Read/Retrieve — GET
+Update — PUT/PATCH
+Delete — DELETE
+
+*/
