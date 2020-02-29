@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Post = require('../models/post');
 
 module.exports = {
 
@@ -148,6 +149,34 @@ module.exports = {
         //console.log(result);
         res.status(200).json({ success: true });
 
+    },
+
+    getUserPosts: async(req, res, next) => {
+        const {id} = req.params;
+        const user = await User.findById(id).populate({
+            path: 'posts',
+            model: Post
+        });
+        console.log(user.posts);
+        
+    },
+
+    newUserPost: async(req, res, next) => {
+        const {id} = req.params;
+        // create a new post
+        const newPost = new Post(req.body);
+        //console.log(newPost);
+        // define the relationship between new post and the user
+        const user = await User.findById(id);
+        // assign user as the writer of the posts
+        newPost.author = user;
+        // save the post
+        await newPost.save();
+        // add the new post to the users's array posts that is inside the user model
+        user.posts.push(newPost);
+        // save the user
+        await user.save();
+        res.status(201).json(newPost);
     }
 
 

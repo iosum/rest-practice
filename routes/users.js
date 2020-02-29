@@ -12,7 +12,6 @@ router.route('/')
 
 // /users/:id
 router.route('/:id')
-    
     // get a particular user
     .get(UsersControllers.getUser)
     // modify a singular resource which is already a part of resources collection. 
@@ -20,6 +19,13 @@ router.route('/:id')
     .put(UsersControllers.replaceUser)
     .patch(UsersControllers.updateUser)
     // .delete()
+
+
+router.route('/:id/posts')
+    .get(UsersControllers.getUserPosts)
+    .post(UsersControllers.newUserPost)
+
+
 
 module.exports = router;
 

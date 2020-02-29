@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     firstName: String,
     lastName: String,
-    createdAt: Date,
     posts:[{
         type: Schema.Types.ObjectId,
         ref: 'post'
