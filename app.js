@@ -16,7 +16,7 @@ mongoose.connect('mongodb+srv://comp2106:castle0118joyce@cluster-4ot4y.mongodb.n
 
 // import routes
 const usersRoute = require('./routes/users');
-
+const postsRoute = require('./routes/posts');
 
 const app = express();
 
@@ -26,7 +26,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // use the certain route
-app.use('/users', usersRoute)
+app.use('/users', usersRoute);
+app.use('/posts', postsRoute);
 
 // Controllers
 app.get('/', (req, res, next) => {

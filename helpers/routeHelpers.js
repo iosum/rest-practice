@@ -64,9 +64,25 @@ module.exports = {
             lastName: Joi.string()
         }),
 
-        postSchema: Joi.object().keys({
+        userPostSchema: Joi.object().keys({
             content: Joi.string().required(),
             createdAt: Joi.date().required()
+        }),
+
+        postSchema: Joi.object().keys({
+            author: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required(),
+            content: Joi.string().required(),
+            createdAt: Joi.date().required()
+        }),
+
+        putPostSchema: Joi.object().keys({
+            content: Joi.string().required(),
+            createdAt: Joi.date().required()
+        }),
+
+        patchPostSchema: Joi.object().keys({
+            content: Joi.string(),
+            createdAt: Joi.date()        
         }),
 
         idSchema: Joi.object().keys({
